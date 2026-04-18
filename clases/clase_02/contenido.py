@@ -1,12 +1,20 @@
+# /// script
+# requires-python = ">=3.13"
+# dependencies = [
+#     "marimo>=0.23.1",
+# ]
+# ///
+
 import marimo
 
-__generated_with = "0.13.0"
+__generated_with = "0.23.1"
 app = marimo.App(width="medium")
 
 
 @app.cell
 def _():
     import marimo as mo
+
     return (mo,)
 
 
@@ -105,7 +113,7 @@ def _():
             print(f"  {banda / 1000:.0f} kHz")
         else:
             print(f"  {banda} Hz")
-    return (bandas_octava,)
+    return
 
 
 @app.cell
@@ -126,7 +134,7 @@ def _():
     print("Listado de pistas:")
     for i, pista in enumerate(pistas, start=1):
         print(f"  Track {i:02d}: {pista}")
-    return (pistas,)
+    return
 
 
 @app.cell
@@ -194,7 +202,7 @@ def _():
 
 
 @app.cell
-def _(math):
+def _():
     # Filtrar: solo frecuencias por encima de 1000 Hz
     todas_las_freq = [100, 250, 500, 800, 1000, 2000, 4000, 8000, 16000]
     agudos = [f for f in todas_las_freq if f > 1000]
@@ -203,7 +211,7 @@ def _(math):
     print(f"Todas: {todas_las_freq}")
     print(f"Agudos (>1kHz): {agudos}")
     print(f"Graves (<=500): {graves}")
-    return (todas_las_freq,)
+    return
 
 
 @app.cell
@@ -366,7 +374,7 @@ def _():
     print("\nEscala de Do mayor:")
     for nota, freq in nota_freq.items():
         print(f"  {nota}: {freq:>7.2f} Hz")
-    return (nota_freq,)
+    return
 
 
 @app.cell
@@ -458,7 +466,7 @@ def _():
     niveles_activos = [t["nivel_db"] for t in sesion if not t["mute"]]
     promedio = sum(niveles_activos) / len(niveles_activos)
     print(f"Nivel promedio (activos): {promedio:.1f} dB")
-    return (sesion,)
+    return
 
 
 @app.cell

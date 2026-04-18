@@ -1,12 +1,20 @@
+# /// script
+# requires-python = ">=3.13"
+# dependencies = [
+#     "marimo>=0.22.4",
+# ]
+# ///
+
 import marimo
 
-__generated_with = "0.13.0"
+__generated_with = "0.23.1"
 app = marimo.App(width="medium")
 
 
 @app.cell
 def _():
     import marimo as mo
+
     return (mo,)
 
 
@@ -45,7 +53,17 @@ def _(mo):
 @app.cell
 def _():
     # EJERCICIO 1: Tu codigo aca
-    # freq = 880
+    _freq = 1000 #Hz
+    if _freq >20 and _freq <60:
+        print (f"{_freq} Hz - categoria: Sub-Bass")
+    elif _freq >60 and _freq <250:
+        print (f"{_freq} Hz - categoria: Bass")
+    elif _freq >250 and _freq <4000:
+        print (f"{_freq} Hz - categoria: Mid")
+    elif _freq >4000 and _freq <12000:
+        print (f"{_freq} Hz - categoria: Treble")
+    elif _freq >12000 and _freq <20000:
+        print (f"{_freq} Hz - categoria: ultra Treble")
     return
 
 
@@ -67,6 +85,11 @@ def _(mo):
 @app.cell
 def _():
     # EJERCICIO 2: Tu codigo aca
+    fundamental = 220 #Hz
+    armonicos = [1,2,3,4,5,6,7,8,9,10]
+    for i in armonicos:
+        freq_ = fundamental * i
+        print(f"armonico {i}: {freq_} Hz") 
     return
 
 
@@ -90,9 +113,13 @@ def _(mo):
 @app.cell
 def _():
     # EJERCICIO 3: Tu codigo aca
-    # import math
-    # amplitudes = [1.0, 0.707, 0.5, 0.25, 0.1, 0.01]
-    return
+    import math
+    amplitudes = [1, 0.707, 0.5, 0.25, 0.1, 0.01]
+    dB = [20*math.log10(a) for a in amplitudes] #dB
+    # Usamos un for para recorrer ambas listas al mismo tiempo
+    for amp, decibel in zip(amplitudes, dB):
+        print(f"({amp:<6},{decibel:.2f} dB)")
+    return (math,)
 
 
 @app.cell
@@ -111,8 +138,15 @@ def _(mo):
 
 
 @app.cell
-def _():
+def _(math):
     # EJERCICIO 4: Tu codigo aca
+
+    Frecuencias_centrales = [125, 250, 500, 1000, 2000, 4000, 8000, 16000] #Hz
+    diccionario_bw = {fc: fc * (math.sqrt(2) - 1/math.sqrt(2)) for fc in Frecuencias_centrales}
+    for fc, bw in diccionario_bw.items():
+        print(f"{fc} Hz: BW = {bw:.1f} Hz")
+
+
     return
 
 
@@ -143,6 +177,16 @@ def _(mo):
 @app.cell
 def _():
     # EJERCICIO 5: Tu codigo aca
+    lista_original= [
+        {"nombre": "voz.wav", "sr": 44100, "bits": 16, "duracion": 30.0},
+        {"nombre": "guitarra.wav", "sr": 22050, "bits": 16, "duracion": 120.0},
+        {"nombre": "master.wav", "sr": 96000, "bits": 32, "duracion": 240.0},
+        {"nombre": "borrador.wav", "sr": 8000, "bits": 8, "duracion": 5.0},
+        {"nombre": "drums.wav", "sr": 48000, "bits": 24, "duracion": 60.0},
+    ]
+    list_comprension = [archivo["nombre"] for archivo in lista_original if archivo["sr"] >= 44100]
+    print (list_comprension)
+
     return
 
 
@@ -172,6 +216,20 @@ def _(mo):
 @app.cell
 def _():
     # EJERCICIO 6: Tu codigo aca
+    frecuencias_fundamentales = [100, 200, 440] #Hz
+    _armonicos = [1, 2, 3, 4, 5]
+    salida = [f * n for f in frecuencias_fundamentales for n in _armonicos]
+    print ("    |", end ="")
+    for n in _armonicos:
+        print(f" x{n} |", end="")
+    print ("----|-----------------------------")
+    for f in frecuencias_fundamentales:
+        print(f"{f:>2} |", end="")
+    for n in _armonicos:
+        salida_ = [f * n for f in frecuencias_fundamentales]
+        print(f" {salida_[0]:>5} |", end="")
+    print()
+
     return
 
 
@@ -201,7 +259,14 @@ def _(mo):
 @app.cell
 def _():
     # EJERCICIO 7: Tu codigo aca
-    return
+    album = ["Speak to Me", "Breathe", "On the Run", "Time",
+             "The Great Gig in the Sky", "Money", "Us and Them",
+             "Any Colour You Like", "Brain Damage", "Eclipse"]
+
+    enumerate = list(enumerate(album, start=1))
+    for index, track in enumerate:
+        print(f"{index:>2}. {track}")
+    return (enumerate,)
 
 
 @app.cell
