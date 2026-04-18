@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.13"
 # dependencies = [
-#     "marimo>=0.22.4",
+#     "marimo>=0.23.1",
 # ]
 # ///
 
@@ -145,8 +145,6 @@ def _(math):
     diccionario_bw = {fc: fc * (math.sqrt(2) - 1/math.sqrt(2)) for fc in Frecuencias_centrales}
     for fc, bw in diccionario_bw.items():
         print(f"{fc} Hz: BW = {bw:.1f} Hz")
-
-
     return
 
 
@@ -186,7 +184,6 @@ def _():
     ]
     list_comprension = [archivo["nombre"] for archivo in lista_original if archivo["sr"] >= 44100]
     print (list_comprension)
-
     return
 
 
@@ -217,19 +214,12 @@ def _(mo):
 def _():
     # EJERCICIO 6: Tu codigo aca
     frecuencias_fundamentales = [100, 200, 440] #Hz
-    _armonicos = [1, 2, 3, 4, 5]
-    salida = [f * n for f in frecuencias_fundamentales for n in _armonicos]
-    print ("    |", end ="")
-    for n in _armonicos:
-        print(f" x{n} |", end="")
-    print ("----|-----------------------------")
-    for f in frecuencias_fundamentales:
-        print(f"{f:>2} |", end="")
-    for n in _armonicos:
-        salida_ = [f * n for f in frecuencias_fundamentales]
-        print(f" {salida_[0]:>5} |", end="")
-    print()
-
+    numeros_de_armonicos = [1, 2, 3, 4, 5]
+    header= "      |"
+    for n in numeros_de_armonicos:
+        header += f"  x{n}"
+    print (header)
+    print ("------|" + "-" * (6 * len(numeros_de_armonicos)))
     return
 
 
@@ -265,7 +255,7 @@ def _():
 
     enumerate = list(enumerate(album, start=1))
     for index, track in enumerate:
-        print(f"{index:>2}. {track}")
+        print(f"{index:>2}. {track}") 
     return (enumerate,)
 
 
@@ -290,8 +280,16 @@ def _(mo):
 
 
 @app.cell
-def _():
+def _(enumerate):
     # EJERCICIO 8: Tu codigo aca
+    left_8= [0.5, -0.3, 0.8, -0.6, 0.2, -0.9, 0.4]
+    right_8 = [0.3, -0.1, 0.6, -0.4, 0.1, -0.7, 0.3]
+
+    stereo_pairs = list(zip(left_8, right_8))
+
+    for i, (left, right) in enumerate(stereo_pairs, start=1):
+        mono = (left + right) / 2
+        print(f"Muestra {i}: Left = {left}, Right = {right}, Mono = {mono}")
     return
 
 
@@ -319,6 +317,26 @@ def _(mo):
 @app.cell
 def _():
     # EJERCICIO 9: Tu codigo aca
+    interface_a= {44100, 48000, 88200, 96000, 176400, 192000}
+    interface_b= {44100, 48000, 96000}
+
+    print(f"Interfaz A: {sorted(interface_a)}")
+    print(f"Interfaz B: {sorted(interface_b)}")
+    print()
+
+    comunes = interface_a & interface_b
+    print (f"1.comunes (A & B):  {sorted(comunes)}")
+
+    ambas= interface_a | interface_b
+    print (f"2.ambas (A o B): {sorted(ambas)}")
+
+    solo_en_a= interface_a - interface_b
+    print (f"3.solo en A (A - B): {sorted(solo_en_a)}")
+
+    es_subconjunto= interface_b.issubset(interface_a)
+    print(f"4.B es subconjunto de A: {es_subconjunto}")
+
+
     return
 
 
@@ -346,6 +364,17 @@ def _(mo):
 @app.cell
 def _():
     # EJERCICIO 10: Tu codigo aca
+
+    nombres_notas = ["A3", "B3", "C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5", "D5", "E5", "F5", "G5", "A5"]
+    midi_base = [57, 59, 60, 62, 64, 65, 67, 69, 71, 72, 74, 76, 77, 79, 81]
+
+    nota_freq_10= {nombres: 440 * 2**((midi-69)/12) for nombres, midi in zip(nombres_notas, midi_base)}
+
+    print ("Nota - Frecuencia")
+    print ("-" * 30)
+
+    for nota, freq in nota_freq_10.items():
+        print (f"{nota:3s} : {freq:<10.2f}Hz")
     return
 
 

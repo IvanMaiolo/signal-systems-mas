@@ -1,18 +1,27 @@
+# /// script
+# requires-python = ">=3.13"
+# dependencies = [
+#     "marimo>=0.23.1",
+# ]
+# ///
+
 import marimo
 
-__generated_with = "0.13.0"
+__generated_with = "0.23.1"
 app = marimo.App(width="medium")
 
 
 @app.cell
 def _():
     import marimo as mo
+
     return (mo,)
 
 
 @app.cell
 def _():
     import math
+
     return (math,)
 
 
